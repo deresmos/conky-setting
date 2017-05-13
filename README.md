@@ -12,13 +12,19 @@ Setting
 Usage
 --
 * Create and update conky conf.
-`python start.py`
+```sh
+python start.py
+```
 
 * Create conky conf and run conky.
-`python start.py 1`
+```sh
+python start.py 1
+```
 
 * Run conky.
-`python start.py 2`
+```sh
+python start.py 2
+```
 
 
 License
