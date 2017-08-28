@@ -1,3 +1,5 @@
 __pycache__
 tmp/*
+configs/*
+!configs/base_setting.conf
 !.gitkeep
