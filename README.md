@@ -15,17 +15,17 @@ Usage
 --
 * Create and update conky conf.
 ```sh
-python start.py
+python start.py --create
 ```
 
 * Create conky conf and run conky.
 ```sh
-python start.py 1
+python start.py --setup
 ```
 
 * Run conky.
 ```sh
-python start.py 2
+python start.py --run
 ```
 
 

@@ -8,8 +8,9 @@ except:
 
 
 class StartConky:  # {{{1
-    EXECUTE = 1
-    ONLY_EXECUTE = 2
+    CREATE = 0
+    SETUP = 1
+    RUN = 2
 
     def __init__(self, conf_names, script_names=None):  # {{{2
         path = os.path.dirname(os.path.realpath(__file__))
@@ -29,12 +30,12 @@ class StartConky:  # {{{1
         ]
 
     def run(self, isRun):  # {{{2
-        if isRun == StartConky.ONLY_EXECUTE:
+        if isRun == StartConky.RUN:
             self.execute()
             return
 
         self.generate_configs()
-        if isRun == StartConky.EXECUTE:
+        if isRun == StartConky.SETUP:
             self.execute()
 
     def generate_configs(self):  # {{{2
@@ -47,12 +48,13 @@ class StartConky:  # {{{1
             str = self.base_settings + readfile(config)
             with open(self.save_paths[i], 'w') as f:
                 f.write(str)
+                print('Writed {}'.format(self.save_paths[i]))
 
     def execute(self):  # {{{2
         for config in self.save_paths:
             str = 'conky -c {}'.format(config)
-            print(str)
             shell(str)
+            print(str)
 
 
 # }}}1
