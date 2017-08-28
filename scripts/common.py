@@ -1,76 +1,83 @@
 # imports {{{1
 import os
+from abc import abstractmethod
+from os.path import expanduser
 from subprocess import Popen, check_call, check_output
 
 
-def esc(str):  # {{{1
-    return '${{{0}}}'.format(str)
+class ConkyConfWriter:
+    H1_GOTO = 'goto 0'
+    H2_GOTO = 'goto 20'
+    H3_GOTO = 'goto 30'
+
+    COLOR = 'color'
+    COLOR2 = 'color2'
+
+    BASE_FONT_SIZE = 9
+    H1_FONT_SIZE = 'font :size={}'.format(int(BASE_FONT_SIZE * 1.6))
+    H2_FONT_SIZE = 'font :size={}'.format(int(BASE_FONT_SIZE * 1.2))
+    SMALL_FONT_SIZE = 'font :size={}'.format(int(BASE_FONT_SIZE * 0.9))
+
+    @abstractmethod  # get_conf {{{2
+    def get_conf(self):
+        pass
+
+    def _get_conf(self, main_text):
+        conf_str = self.get_config()
+        conf_str += main_text + '\n]]\n'
+
+        return conf_str
+
+    @abstractmethod  # get_config {{{2
+    def get_config(self):
+        pass
+
+    def _get_config(self, text):
+        return text + '}\n\n' + 'conky.text = [[\n\n'
+
+    def __init__(self, conf_filename):  # {{{2
+        self.h1_goto = self.conky_esc(ConkyConfWriter.H1_GOTO)
+        self.h2_goto = self.conky_esc(ConkyConfWriter.H2_GOTO)
+        self.h3_goto = self.conky_esc(ConkyConfWriter.H3_GOTO)
+
+        self.color = self.conky_esc(ConkyConfWriter.COLOR)
+        self.color2 = self.conky_esc(ConkyConfWriter.COLOR2)
+
+        self.h1_font_size = self.conky_esc(ConkyConfWriter.H1_FONT_SIZE)
+        self.h2_font_size = self.conky_esc(ConkyConfWriter.H2_FONT_SIZE)
+        self.small_font_size = self.conky_esc(ConkyConfWriter.SMALL_FONT_SIZE)
+
+        path = os.path.dirname(os.path.realpath(__file__))
+        self.__config_path = os.path.abspath(os.path.join(path, '../configs'))
+
+        self._conf_filename = conf_filename
+
+    def conky_esc(self, text):  # {{{2
+        return '${{{0}}}'.format(text)
+
+    def h1(self, text):  # {{{2
+        str = self.h1_goto + self.color + self.h1_font_size
+        str += '{}  '.format(text)
+        str += self.color2 + self.conky_esc('hr 4')
+        str += self.color + self.conky_esc('font') + '\n'
+
+        return str
+
+    def h2(self, text):  # {{{2
+        str = self.h2_goto + self.color + self.h1_font_size
+        str += '{}  '.format(text)
+        str += self.color2 + self.conky_esc('hr 2')
+        str += self.color + self.conky_esc('font') + '\n'
+
+        return str
+
+    def run_shell(command, shell=True, var=None):  # {{{2
+        if var == 'cc':
+            return check_call(command, shell=shell)
+        elif var == 'co':
+            return check_output(command, shell=shell)
+        else:
+            return Popen(command, shell=shell)
 
 
-# variables {{{1
-path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, '..')
-
-h1_goto = 'goto 0'
-h2_goto = 'goto 20'
-h3_goto = 'goto 30'
-
-color = 'color'
-color2 = 'color2'
-
-font_size = 9
-h1_font = 'font :size={}'.format(int(font_size * 1.6))
-h2_font = 'font :size={}'.format(int(font_size * 1.2))
-small_font = 'font :size={}'.format(int(font_size * 0.9))
-
-h1_goto = esc(h1_goto)
-h2_goto = esc(h2_goto)
-h3_goto = esc(h3_goto)
-
-h1_font = esc(h1_font)
-h2_font = esc(h2_font)
-small_font = esc(small_font)
-
-color = esc(color)
-color2 = esc(color2)
-
-script_dir = os.path.join(path, 'scripts')
-config_dir = os.path.join(path, 'configs')
-
-
-# functions {{{1
-def h1(title):  # {{{1
-    str = h1_goto + color
-    str += h1_font
-    str += '{}  '.format(title)
-    str += color2 + esc('hr 4')
-    str += color + esc('font') + '\n'
-
-    return str
-
-
-def h2(title):  # {{{1
-    str = h2_goto + color + h2_font
-    str += '{}  '.format(title)
-    str += color2 + esc('hr 2')
-    str += color + esc('font') + '\n'
-
-    return str
-
-
-def readfile(filepath):  # {{{1
-    with open(filepath) as f:
-        return f.read()
-
-
-def shell(command, shell=True, var=None):  # {{{1
-    if var == 'cc':
-        return check_call(command, shell=shell)
-    elif var == 'co':
-        return check_output(command, shell=shell)
-    else:
-        return Popen(command, shell=shell)
-
-
-def file_pwd():  # {{{1
-    return os.path.dirname(os.path.realpath(__file__))
+# }}}2
