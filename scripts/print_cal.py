@@ -4,7 +4,7 @@ from datetime import date
 
 
 # set positions
-def createGoto(num):
+def create_goto(num):
     datas = []
     goto_num = 90
     for _ in range(7):
@@ -14,7 +14,7 @@ def createGoto(num):
     return datas
 
 
-def createCal():  # {{{1
+def get_calendar():  # {{{1
     localtime = time.localtime(time.time())
     calendar.setfirstweekday(calendar.SUNDAY)
     cal = calendar.month(localtime[0], localtime[1])
@@ -24,7 +24,7 @@ def createCal():  # {{{1
     lastday = cal.split('\n')[-2].split(' ')[-1]
     weekdays = cal.split('\n')[1].split(' ')
 
-    gotos = createGoto(30)
+    gotos = create_goto(30)
 
     str = '${font migu1m:size=16}'
     for i, days in enumerate(weekdays):
@@ -50,4 +50,4 @@ def createCal():  # {{{1
 
 if __name__ == '__main__':  # {{{1
 
-    print(createCal())
+    print(get_calendar())

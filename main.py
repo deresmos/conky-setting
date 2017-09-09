@@ -23,9 +23,9 @@ if __name__ == '__main__':  # {{{1
     args = parser.parse_args()
 
     info_conky = InfoConkyConf()
-    info_conky.save_conf()
+    info_conky.saveConf()
     system_conky = SystemConkyConf()
-    system_conky.save_conf()
+    system_conky.saveConf()
 
     if args.create:
         sys.exit()

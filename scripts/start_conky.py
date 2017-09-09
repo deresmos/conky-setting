@@ -4,10 +4,6 @@ from subprocess import check_output
 
 
 class StartConky:  # {{{1
-    CREATE = 0
-    SETUP = 1
-    RUN = 2
-
     def __init__(self, conf_names):  # {{{2
         path = os.path.dirname(os.path.realpath(__file__))
         path = os.path.abspath(os.path.join(path, '..'))

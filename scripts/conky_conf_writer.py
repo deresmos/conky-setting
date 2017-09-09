@@ -18,38 +18,38 @@ class ConkyConfWriter:
     H2_FONT_SIZE = 'font :size={}'.format(int(BASE_FONT_SIZE * 1.2))
     SMALL_FONT_SIZE = 'font :size={}'.format(int(BASE_FONT_SIZE * 0.9))
 
-    @abstractmethod  # get_conf {{{2
-    def get_conf(self):
+    @abstractmethod  # getConf {{{2
+    def getConf(self):
         pass
 
-    def _get_conf(self, main_text):
+    def _getConf(self, main_text):
         with open(os.path.join(self.__config_path, 'base_setting.conf'),
                   'r') as f:
             conf_str = f.read()
 
-        conf_str += self.get_config()
+        conf_str += self.getConfig()
         conf_str += main_text + '\n]]\n'
 
         return conf_str
 
-    @abstractmethod  # get_config {{{2
-    def get_config(self):
+    @abstractmethod  # getConfig {{{2
+    def getConfig(self):
         pass
 
-    def _get_config(self, text):
+    def _getConfig(self, text):
         return text + '}\n\n' + 'conky.text = [[\n\n'
 
     def __init__(self, conf_filename):  # {{{2
-        self.h1_goto = self.conky_esc(ConkyConfWriter.H1_GOTO)
-        self.h2_goto = self.conky_esc(ConkyConfWriter.H2_GOTO)
-        self.h3_goto = self.conky_esc(ConkyConfWriter.H3_GOTO)
+        self.h1_goto = self.conkyEsc(ConkyConfWriter.H1_GOTO)
+        self.h2_goto = self.conkyEsc(ConkyConfWriter.H2_GOTO)
+        self.h3_goto = self.conkyEsc(ConkyConfWriter.H3_GOTO)
 
-        self.color = self.conky_esc(ConkyConfWriter.COLOR)
-        self.color2 = self.conky_esc(ConkyConfWriter.COLOR2)
+        self.color = self.conkyEsc(ConkyConfWriter.COLOR)
+        self.color2 = self.conkyEsc(ConkyConfWriter.COLOR2)
 
-        self.h1_font_size = self.conky_esc(ConkyConfWriter.H1_FONT_SIZE)
-        self.h2_font_size = self.conky_esc(ConkyConfWriter.H2_FONT_SIZE)
-        self.small_font_size = self.conky_esc(ConkyConfWriter.SMALL_FONT_SIZE)
+        self.h1_font_size = self.conkyEsc(ConkyConfWriter.H1_FONT_SIZE)
+        self.h2_font_size = self.conkyEsc(ConkyConfWriter.H2_FONT_SIZE)
+        self.small_font_size = self.conkyEsc(ConkyConfWriter.SMALL_FONT_SIZE)
 
         path = os.path.dirname(os.path.realpath(__file__))
         self.__config_path = os.path.abspath(os.path.join(path, '../configs'))
@@ -59,26 +59,26 @@ class ConkyConfWriter:
         self._conf_filename = conf_filename
         self.__save_path = os.path.join(self.__tmp_path, conf_filename)
 
-    def conky_esc(self, text):  # {{{2
+    def conkyEsc(self, text):  # {{{2
         return '${{{0}}}'.format(text)
 
-    def save_conf(self):  # {{{2
+    def saveConf(self):  # {{{2
         with open(self.__save_path, 'w') as f:
-            f.write(self.get_conf())
+            f.write(self.getConf())
 
     def h1(self, text):  # {{{2
         str = self.h1_goto + self.color + self.h1_font_size
         str += '{}  '.format(text)
-        str += self.color2 + self.conky_esc('hr 4')
-        str += self.color + self.conky_esc('font') + '\n'
+        str += self.color2 + self.conkyEsc('hr 4')
+        str += self.color + self.conkyEsc('font') + '\n'
 
         return str
 
     def h2(self, text):  # {{{2
         str = self.h2_goto + self.color + self.h2_font_size
         str += '{}  '.format(text)
-        str += self.color2 + self.conky_esc('hr 2')
-        str += self.color + self.conky_esc('font') + '\n'
+        str += self.color2 + self.conkyEsc('hr 2')
+        str += self.color + self.conkyEsc('font') + '\n'
 
         return str
 

@@ -14,7 +14,7 @@ class SystemConkyConf(ConkyConfWriter):
     def createGotos(self, array):  # {{{2
         gotos = []
         for num in array:
-            gotos.append(self.conky_esc('goto {}'.format(num)))
+            gotos.append(self.conkyEsc('goto {}'.format(num)))
 
         return gotos
 
@@ -28,11 +28,11 @@ class SystemConkyConf(ConkyConfWriter):
         str += goto[2] + 'Cached' + goto[3] + 'Used'
         str += '\n'
 
-        str += self.h3_goto + self.color + self.conky_esc('memmax')
-        str += goto[0] + self.conky_esc('memfree') + \
-            goto[1] + self.conky_esc('buffers')
-        str += goto[2] + self.conky_esc('cached') + \
-            goto[3] + self.conky_esc('mem')
+        str += self.h3_goto + self.color + self.conkyEsc('memmax')
+        str += goto[0] + self.conkyEsc('memfree') + \
+            goto[1] + self.conkyEsc('buffers')
+        str += goto[2] + self.conkyEsc('cached') + \
+            goto[3] + self.conkyEsc('mem')
         str += '\n'
 
         return str
@@ -40,7 +40,7 @@ class SystemConkyConf(ConkyConfWriter):
     def getCpu(self):  # {{{2
         str = self.h2('CPU   ${font}${cpu}%')
         str += self.h3_goto
-        str += self.conky_esc('execpi 3 python {}'.format(
+        str += self.conkyEsc('execpi 3 python {}'.format(
             os.path.join(self._path, 'print_cpu.py')))
 
         str += '\n'
@@ -70,10 +70,10 @@ class SystemConkyConf(ConkyConfWriter):
         str = ''
         for x in range(1, 7):
             str += goto[0] + self.color2 + \
-                self.conky_esc('top name {}'.format(x)) + self.color
-            str += goto[1] + self.conky_esc('top pid {}'.format(x))
-            str += goto[2] + self.conky_esc('top cpu {}'.format(x))
-            str += goto[3] + self.conky_esc('top mem_res {}'.format(x)) + '\n'
+                self.conkyEsc('top name {}'.format(x)) + self.color
+            str += goto[1] + self.conkyEsc('top pid {}'.format(x))
+            str += goto[2] + self.conkyEsc('top cpu {}'.format(x))
+            str += goto[3] + self.conkyEsc('top mem_res {}'.format(x)) + '\n'
 
         return str
 
@@ -83,11 +83,11 @@ class SystemConkyConf(ConkyConfWriter):
         str = ''
         for x in range(1, 7):
             str += goto[0] + self.color2 + \
-                self.conky_esc('top_mem name {}'.format(x)) + self.color
-            str += goto[1] + self.conky_esc('top_mem pid {}'.format(x))
-            str += goto[2] + self.conky_esc('top_mem cpu {}'.format(x))
+                self.conkyEsc('top_mem name {}'.format(x)) + self.color
+            str += goto[1] + self.conkyEsc('top_mem pid {}'.format(x))
+            str += goto[2] + self.conkyEsc('top_mem cpu {}'.format(x))
             str += goto[3] + \
-                self.conky_esc('top_mem mem_res {}'.format(x)) + '\n'
+                self.conkyEsc('top_mem mem_res {}'.format(x)) + '\n'
 
         return str
 
@@ -106,12 +106,12 @@ class SystemConkyConf(ConkyConfWriter):
 
         dev = self.getDev()
         str += self.h3_goto + self.color + dev
-        str += goto[0] + self.conky_esc('diskio_write {}'.format(dev))
-        str += goto[1] + self.conky_esc('diskio_read {}'.format(dev))
+        str += goto[0] + self.conkyEsc('diskio_write {}'.format(dev))
+        str += goto[1] + self.conkyEsc('diskio_read {}'.format(dev))
         str += '\n'
 
-        str += self.conky_esc('voffset -25') + goto[2]
-        str += self.conky_esc(
+        str += self.conkyEsc('voffset -25') + goto[2]
+        str += self.conkyEsc(
             'diskiograph {} 20, 160 303030 46afa7'.format(dev))
         str += '${voffset}\n'
 
@@ -122,24 +122,24 @@ class SystemConkyConf(ConkyConfWriter):
         goto = self.createGotos([200])
 
         wl = self.getEnv()
-        str = self.conky_esc('voffset 5') + self.h2('Network')
+        str = self.conkyEsc('voffset 5') + self.h2('Network')
         str += self.h3_goto + self.color2 + 'Down speed:'
-        str += self.color + self.conky_esc('downspeed {}'.format(wl))
+        str += self.color + self.conkyEsc('downspeed {}'.format(wl))
         str += goto[0] + self.color2 + 'Up speed:'
-        str += self.color + self.conky_esc('upspeed {}'.format(wl))
+        str += self.color + self.conkyEsc('upspeed {}'.format(wl))
         str += '\n'
 
         str += self.h3_goto + \
-            self.conky_esc('downspeedgraph {} 20, 150 303030 00ff00'.format(wl))
+            self.conkyEsc('downspeedgraph {} 20, 150 303030 00ff00'.format(wl))
         str += goto[0] + \
-            self.conky_esc('upspeedgraph {} 20, 150 303030 ff0000'.format(wl))
+            self.conkyEsc('upspeedgraph {} 20, 150 303030 ff0000'.format(wl))
         str += '\n'
 
         str += self.h3_goto + self.color2 + 'Toal down:'
-        str += self.color + self.conky_esc('totaldown {}'.format(wl))
+        str += self.color + self.conkyEsc('totaldown {}'.format(wl))
 
         str += goto[0] + self.color2 + 'Toal up:'
-        str += self.color + self.conky_esc('totalup {}'.format(wl))
+        str += self.color + self.conkyEsc('totalup {}'.format(wl))
         str += '\n'
 
         return str
@@ -153,19 +153,19 @@ class SystemConkyConf(ConkyConfWriter):
             print('getEnv error')
             return None
 
-    def get_config(self):  # {{{2
+    def getConfig(self):  # {{{2
         str = '\talignment = \'top_left\',\n'
         str += "\tfont = ':size={}',\n".format(9)
         str += '\tupdate_interval = 3\n'
 
-        return self._get_config(str)
+        return self._getConfig(str)
 
-    def get_conf(self):  # {{{2
+    def getConf(self):  # {{{2
         str = self.h1('RAM & CPU')
         str += self.getRam()
         str += self.getCpu()
 
-        str += self.conky_esc('voffset -20')
+        str += self.conkyEsc('voffset -20')
         str += self.h1('Top Process')
         str += self.getTopProcess()
         str += '\n'
@@ -174,9 +174,9 @@ class SystemConkyConf(ConkyConfWriter):
         str += self.diskio()
         str += self.network()
 
-        return self._get_conf(str)
+        return self._getConf(str)
 
 
 if __name__ == '__main__':  # {{{1
     text = SystemConkyConf()
-    print(text.get_conf())
+    print(text.getConf())

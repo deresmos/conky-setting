@@ -1,7 +1,7 @@
 # imports {{{1
 import os
 
-from .print_cal import createCal
+from .print_cal import get_calendar
 from .conky_conf_writer import ConkyConfWriter
 
 
@@ -9,7 +9,7 @@ class InfoConkyConf(ConkyConfWriter):
     def __init__(self):  # {{{2
         super().__init__('info.conf')
 
-    def get_conf(self):  # {{{2
+    def getConf(self):  # {{{2
         text = '''
             ${voffset -8}$alignr$color${font Bitstream Vera Sans:size=30}${time %Y}$font
             $color${voffset -30}$color${font Bitstream Vera Sans:size=20}${time %m}$font\
@@ -31,13 +31,13 @@ class InfoConkyConf(ConkyConfWriter):
             '''
 
         text += self.h2('Calendar')
-        text += createCal()
+        text += get_calendar()
 
-        return self._get_conf(text)
+        return self._getConf(text)
 
-    def get_config(self):  # {{{2
-        return self._get_config('')
+    def getConfig(self):  # {{{2
+        return self._getConfig('')
 
 if __name__ == '__main__':  # {{{1
     text = InfoConkyConf()
-    print(text.get_conf())
+    print(text.getConf())
