@@ -1,11 +1,12 @@
 # imports {{{1
 import os
+import re
+from subprocess import check_output
 
 from .conky_conf_writer import ConkyConfWriter
-from subprocess import check_output
-import re
 
 # }}}1
+
 
 class SystemConkyConf(ConkyConfWriter):
     def __init__(self):  # {{{2
@@ -117,7 +118,6 @@ class SystemConkyConf(ConkyConfWriter):
 
         return str
 
-
     def network(self):  # {{{2
         goto = self.createGotos([200])
 
@@ -147,7 +147,8 @@ class SystemConkyConf(ConkyConfWriter):
     def getEnv(self):  # {{{2
         try:
             res = check_output(['ifconfig']).decode('utf-8')
-            match = re.findall(r'^(.*?):.*?[\r\n].*?broadcast', res, re.MULTILINE)
+            match = re.findall(r'^(.*?):.*?[\r\n].*?broadcast', res,
+                               re.MULTILINE)
             return match[0]
         except:
             print('getEnv error')

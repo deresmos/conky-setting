@@ -1,7 +1,6 @@
 # imports {{{1
 import os
 
-from .print_cal import get_calendar
 from .conky_conf_writer import ConkyConfWriter
 
 
@@ -38,6 +37,7 @@ class InfoConkyConf(ConkyConfWriter):
 
     def getConfig(self):  # {{{2
         return self._getConfig('')
+
 
 if __name__ == '__main__':  # {{{1
     text = InfoConkyConf()

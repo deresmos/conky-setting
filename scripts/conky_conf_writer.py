@@ -1,8 +1,6 @@
 # imports {{{1
 import os
 from abc import abstractmethod
-from os.path import expanduser
-from subprocess import Popen, check_call, check_output
 
 
 class ConkyConfWriter:
