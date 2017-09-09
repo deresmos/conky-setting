@@ -38,11 +38,6 @@ class InfoConkyConf(ConkyConfWriter):
     def get_config(self):  # {{{2
         return self._get_config('')
 
-    def save_conf(self):  # {{{2
-        with open(self._conf_filename, 'w') as f:
-            f.write(self.get_conf())
-
-
 if __name__ == '__main__':  # {{{1
     text = InfoConkyConf()
     print(text.get_conf())

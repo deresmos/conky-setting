@@ -145,15 +145,13 @@ class SystemConkyConf(ConkyConfWriter):
         return str
 
     def getEnv(self):  # {{{2
-        str = ''
         try:
-            str = self.run_shell(
-                "ifconfig | grep -B1 broadcast | grep -o '^[^:]\+\?'",
-                var='co')
+            res = check_output(['ifconfig']).decode('utf-8')
+            match = re.findall(r'^(.*?):.*?[\r\n].*?broadcast', res, re.MULTILINE)
+            return match[0]
         except:
             print('getEnv error')
             return None
-        return str.decode().split('\n')[0]
 
     def get_config(self):  # {{{2
         str = '\talignment = \'top_left\',\n'
@@ -177,10 +175,6 @@ class SystemConkyConf(ConkyConfWriter):
         str += self.network()
 
         return self._get_conf(str)
-
-    def save_conf(self):  # {{{2
-        with open(self._conf_filename, 'w') as f:
-            f.write(self.get_conf())
 
 
 if __name__ == '__main__':  # {{{1
