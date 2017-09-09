@@ -2,16 +2,12 @@ if __name__ == '__main__':  # {{{1
     from scripts import StartConky
     import sys
     import argparse
+    from scripts import SystemConkyConf
+    from scripts import InfoConkyConf
 
     parser = argparse.ArgumentParser(
         prog='conky setting script',
         description='Automatic conky setting creation')
-    parser.add_argument(
-        '--setup',
-        action='store_const',
-        const=True,
-        default=False,
-        help='Start conky and create settings')
     parser.add_argument(
         '--create',
         action='store_const',
@@ -26,14 +22,13 @@ if __name__ == '__main__':  # {{{1
         help='Run conky')
     args = parser.parse_args()
 
-    conf_names = ['info', 'system']
-    script_names = ['info', 'system']
-
-    if args.setup:
-        StartConky(conf_names, script_names).run(StartConky.SETUP)
-    elif args.create:
-        StartConky(conf_names, script_names).run(StartConky.CREATE)
+    if args.create:
+        info_conky = InfoConkyConf()
+        info_conky.saveConf()
+        system_conky = SystemConkyConf()
+        system_conky.saveConf()
     elif args.run:
-        StartConky(conf_names, script_names).run(StartConky.RUN)
+        conf_names = ['info.conf', 'system.conf']
+        StartConky(conf_names).execute()
     else:
         parser.print_help()
