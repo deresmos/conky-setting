@@ -31,7 +31,8 @@ class InfoConkyConf(ConkyConfWriter):
             '''
 
         text += self.h2('Calendar')
-        text += get_calendar()
+        text += self.conkyEsc('execpi 1800 python {}'.format(
+            os.path.join(self._path, 'print_cal.py')))
 
         return self._getConf(text)
 
