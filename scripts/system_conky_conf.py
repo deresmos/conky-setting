@@ -1,7 +1,7 @@
 # imports {{{1
 import os
 
-from .common import ConkyConfWriter
+from .conky_conf_writer import ConkyConfWriter
 from subprocess import check_output
 import re
 

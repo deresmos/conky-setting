@@ -2,7 +2,7 @@
 import os
 
 from .print_cal import createCal
-from .common import ConkyConfWriter
+from .conky_conf_writer import ConkyConfWriter
 
 
 class InfoConkyConf(ConkyConfWriter):

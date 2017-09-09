@@ -9,12 +9,6 @@ if __name__ == '__main__':  # {{{1
         prog='conky setting script',
         description='Automatic conky setting creation')
     parser.add_argument(
-        '--setup',
-        action='store_const',
-        const=True,
-        default=False,
-        help='Start conky and create settings')
-    parser.add_argument(
         '--create',
         action='store_const',
         const=True,
@@ -33,7 +27,7 @@ if __name__ == '__main__':  # {{{1
     system_conky = SystemConkyConf()
     system_conky.save_conf()
 
-    if args.setup:
+    if args.create:
         sys.exit()
     elif args.run:
         conf_names = ['info', 'system']
