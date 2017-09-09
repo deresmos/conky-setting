@@ -22,15 +22,13 @@ if __name__ == '__main__':  # {{{1
         help='Run conky')
     args = parser.parse_args()
 
-    info_conky = InfoConkyConf()
-    info_conky.saveConf()
-    system_conky = SystemConkyConf()
-    system_conky.saveConf()
-
     if args.create:
-        sys.exit()
+        info_conky = InfoConkyConf()
+        info_conky.saveConf()
+        system_conky = SystemConkyConf()
+        system_conky.saveConf()
     elif args.run:
-        conf_names = ['info', 'system']
+        conf_names = ['info.conf', 'system.conf']
         StartConky(conf_names).execute()
     else:
         parser.print_help()

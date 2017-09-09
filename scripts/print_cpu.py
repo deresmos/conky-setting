@@ -4,11 +4,11 @@ command = "cat /proc/cpuinfo | grep MHz | awk '{print $4}'"
 
 cpu_freqs = [
     freq for freq in check_output(
-        command, shell=True, var='co').decode().split('\n') if freq != ''
+        command, shell=True).decode().split('\n') if freq != ''
 ]
 
 command = 'cat /proc/cpuinfo | grep "model name" | grep -o ":.*"'
-res = check_output(command, shell=True, var='co').decode().split('\n')
+res = check_output(command, shell=True).decode().split('\n')
 cpu_info = res[0].split(': ')[1]
 print('${alignr}${color2}' + cpu_info)
 

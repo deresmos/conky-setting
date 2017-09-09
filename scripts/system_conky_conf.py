@@ -93,7 +93,7 @@ class SystemConkyConf(ConkyConfWriter):
 
     def getDev(self):  # {{{2
         res = check_output(['df']).decode('utf-8')
-        match = re.findall(r'^(.+?)[ \t].+/$', res, re.MULTILINE)
+        match = re.findall(r'^/dev/(.+?)[ \t].+/$', res, re.MULTILINE)
         return match[0]
 
     def diskio(self):  # {{{2

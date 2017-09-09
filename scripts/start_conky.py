@@ -1,6 +1,6 @@
 # imports {{{1
 import os
-from subprocess import check_output
+from subprocess import Popen
 
 
 class StartConky:  # {{{1
@@ -21,7 +21,7 @@ class StartConky:  # {{{1
     def execute(self):  # {{{2
         for config in self.save_paths:
             str = 'conky -c {}'.format(config)
-            check_output(['conky', '-c', config])
+            Popen(['conky', '-c', config])
             print(str)
 
 
