@@ -1,9 +1,8 @@
 # imports {{{1
 import os
 
-import print_cal
-from common import *
-from common import ConkyConfWriter
+from .print_cal import createCal
+from .common import ConkyConfWriter
 
 
 class InfoConkyConf(ConkyConfWriter):
@@ -32,7 +31,7 @@ class InfoConkyConf(ConkyConfWriter):
             '''
 
         text += self.h2('Calendar')
-        text += print_cal.createCal()
+        text += createCal()
 
         return self._get_conf(text)
 

@@ -23,7 +23,11 @@ class ConkyConfWriter:
         pass
 
     def _get_conf(self, main_text):
-        conf_str = self.get_config()
+        with open(os.path.join(self.__config_path, 'base_setting.conf'),
+                  'r') as f:
+            conf_str = f.read()
+
+        conf_str += self.get_config()
         conf_str += main_text + '\n]]\n'
 
         return conf_str
@@ -49,6 +53,7 @@ class ConkyConfWriter:
 
         path = os.path.dirname(os.path.realpath(__file__))
         self.__config_path = os.path.abspath(os.path.join(path, '../configs'))
+        self._path = path
 
         self._conf_filename = conf_filename
 
@@ -71,7 +76,7 @@ class ConkyConfWriter:
 
         return str
 
-    def run_shell(command, shell=True, var=None):  # {{{2
+    def run_shell(self, command, shell=True, var=None):  # {{{2
         if var == 'cc':
             return check_call(command, shell=shell)
         elif var == 'co':
