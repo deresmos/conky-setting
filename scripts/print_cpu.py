@@ -31,7 +31,7 @@ if len(cpu_freqs) > 4:
 else:
     cpu_str = '${{goto 30}}${{color2}}Core {1}: ${{color}}{0} Mhz '
     cpu_str += '${{color2}}(${{cpu cpu{1}}}%)${{color}}\n'
-    graph_str = '${{goto 30}}${{cpugraph cpu{} 17,170 303030 467f77}}\n'
+    graph_str = '${{goto 30}}${{cpugraph cpu{} 17,310 303030 467f77}}\n'
     for i, freq in enumerate(cpu_freqs):
         core_index = i + 1
         str += cpu_str.format(freq, core_index)
