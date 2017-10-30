@@ -146,10 +146,15 @@ class SystemConkyConf(ConkyConfWriter):
 
     def getEnv(self):  # {{{2
         try:
-            res = check_output(['ifconfig']).decode('utf-8')
-            match = re.findall(r'^(.*?):.*?[\r\n].*?broadcast', res,
-                               re.MULTILINE)
-            return match[0]
+            res = check_output(['ls', '/sys/class/net'])
+            res = [
+                device for device in res.decode('utf-8').split()
+                if check_output([
+                    'cat', '/sys/class/net/{}/operstate'.format(device)
+                ]).decode('utf-8').strip() == 'up'
+            ]
+
+            return res[0]
         except:
             print('getEnv error')
             return None
